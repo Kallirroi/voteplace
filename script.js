@@ -2,7 +2,8 @@ import {$, $$, render, safe} from 'dat://pauls-uikit.hashbase.io/js/dom.js'
 import {clone} from './util.js'
 
 //add photo
-function onChangeAddPhoto (e) {
+function onClickAddPhoto (e) {
+  console.log('you clciked')
   e.preventDefault();
   var self = new DatArchive(window.location);
   if (e.target.files) {
@@ -29,13 +30,12 @@ async function renderThis () {
   // get info about site 
   var info = await self.getInfo()
   // if you own the site, then you can load an image
-  if (info.isOwner) {
-    $('#photos-container').classList.remove('hide');
-  }
-
+  // if (info.isOwner) {
+  //   $('#photos-container').classList.remove('hide');
+  // }
 
   //add empty tiles to mosaic
-  var numTiles = 200;
+  var numTiles = 10;
   for (var i = numTiles - 1; i >= 0; i--) {
     let el = clone($('#tile-template'))
     let url = self.url + '/empty.png'
@@ -43,8 +43,7 @@ async function renderThis () {
     $('#photos-container').appendChild(el)
   }
 
-
-  // render photos   
+  // render loaded photos   
   var photoNames = await self.readdir('/photos');
   photoNames.forEach(name => {
     let url = self.url + '/photos/' + name
@@ -54,9 +53,9 @@ async function renderThis () {
 
 
 async function OnPageLoad () {
-  $('#add-photo-btn').addEventListener('change', onChangeAddPhoto);
-
-  renderThis();
+  $('#add-photo-btn').addEventListener('click', onClickAddPhoto);
+  renderThis()
 }
 
 OnPageLoad()
+
