@@ -2,9 +2,9 @@ import {$, $$, render, safe} from 'dat://pauls-uikit.hashbase.io/js/dom.js'
 import {clone} from './util.js'
 
 //add photo
-function onClickAddPhoto (e) {
-  console.log('you clciked')
+function onChangeAddPhoto (e) {
   e.preventDefault();
+  console.log('you clciked')
   var self = new DatArchive(window.location);
   if (e.target.files) {
     const {files} = e.target
@@ -22,26 +22,29 @@ function onClickAddPhoto (e) {
   }
 }
 
-async function renderThis () {
-  var photosContainer = $('#photos-container');
-  photosContainer.innerHTML = '';
-  var self = new DatArchive(window.location);
-
-  // get info about site 
-  var info = await self.getInfo()
-  // if you own the site, then you can load an image
-  // if (info.isOwner) {
-  //   $('#photos-container').classList.remove('hide');
-  // }
-
+async function addTiles(self) {
+  
   //add empty tiles to mosaic
-  var numTiles = 10;
-  for (var i = numTiles - 1; i >= 0; i--) {
+  var numTiles = 3;
+  for (var i = 1; i <=numTiles; i++) {
     let el = clone($('#tile-template'))
     let url = self.url + '/empty.png'
     $(el,'.image').setAttribute('src', `${safe(url)}`)
     $('#photos-container').appendChild(el)
   }
+}
+
+async function renderThis () {
+  var photosContainer = $('#photos-container');
+  photosContainer.innerHTML = '';
+  var self = new DatArchive(window.location);
+
+  // if you own the site, then you can load an image
+  // var info = await self.getInfo()
+  // if (info.isOwner) {
+  //   $('#photos-container').classList.remove('hide');
+  // }
+  addTiles(self)
 
   // render loaded photos   
   var photoNames = await self.readdir('/photos');
@@ -53,7 +56,7 @@ async function renderThis () {
 
 
 async function OnPageLoad () {
-  $('#add-photo-btn').addEventListener('click', onClickAddPhoto);
+  $('#add-photo-btn').addEventListener('change', onChangeAddPhoto);
   renderThis()
 }
 
