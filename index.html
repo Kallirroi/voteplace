@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<!--
+  Want to customize this website? Learn more about how HTML works:
+  https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML
+-->
+
+<html>
+  <head>
+    <title>votePlace</title>
+    <link rel="stylesheet" href="/styles.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    <main>
+      <h2>votePlace</h2>
+      <div>
+      <ul>
+        <li>Choose a part of the mosaic</li>
+        <li>Click to upload your photo</li>
+        <li>Keep Beaker running to have your mosaic tile show up!</li>
+      </ul>
+      </div>
+      <hr>
+      <span class="hide">
+        <input type="file" name="files" accept="image/*" id="add-photo-btn" multiple>
+      </span>
+      <div id="photos-container"></div>
+    </main>
+
+    <template id="tile-template">
+      <div class="tile"> 
+        <img src="" class="image">
+      </div>
+    </template>
+
+  </body>
+
+  <script type="module" src="script.js"></script>
+</html>
